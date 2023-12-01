@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { AppBar, Avatar, Button, Toolbar, Typography, } from '@material-ui/core';
+import { AppBar, Avatar, Button, Toolbar, Typography,Container, } from '@material-ui/core';
 import decode from 'jwt-decode';
-
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import useStyles from "./styles";
-import memories from '../../images/LOGO.png';     
+   
 import { useDispatch } from 'react-redux';
 
 const Navbar = () => {
@@ -35,23 +35,45 @@ const Navbar = () => {
       }, [location]);
 
     return (
-        <AppBar className={classes.appBar} position="static" color="inherit">
-            <div>
-                <Typography component={ Link } to="/" className={classes.heading} variant="h2" align="center">REMINISCENCE</Typography>
-                <img className={classes.image} src={memories} alt="icon" height="60" />
-            </div>
-            <Toolbar className={classes.toolbar}>
-                {user ? (
-                    <div className={classes.profile}>
-                        <Avatar className={classes.purple} alt={user.result.name} src={user.result.imageUrl}>{user.result.name.charAt(0)}</Avatar>
-                        <Typography className={classes.userName} variant="h6"> {user.result.name}</Typography>
-                        <Button variant="contained" className={classes.logout} color="secondary" onClick={logout} >Logout</Button>
-                    </div>
-                ) : (
-                    <Button component={ Link } to="/auth" variant='contained' color="primary">Sign In</Button>
-                )}
-            </Toolbar>
-      </AppBar>
+    //     
+    <AppBar className={classes.appBar} position="static" color="primary">
+    <Container className={classes.container}>
+      <Link to="/" className={classes.logoContainer}>
+        {/* <img className={classes.image} src={Logo} alt="icon" height="60" /> */}
+        <Typography className={classes.heading} variant="h4"
+        style={{color:"white"}}
+        >
+            Campus Placement  Information & Training Portal
+        </Typography>
+      </Link>
+      <Toolbar className={classes.toolbar}>
+        {user ? (
+          <div className={classes.profile}>
+            <Avatar className={classes.purple} alt={user.result.name} src={user.result.imageUrl}
+            >
+              {user.result.name.charAt(0)}
+            </Avatar>
+            <Typography className={classes.userName} variant="h6">
+              {user.result.name}
+            </Typography>
+            <Button
+              variant="outlined"
+              className={classes.logout}
+              color="secondary"
+              startIcon={<ExitToAppIcon />}
+              onClick={logout}
+            >
+              Logout
+            </Button>
+          </div>
+        ) : (
+          <Button component={Link} to="/auth" variant="contained" color="secondary">
+            Sign In
+          </Button>
+        )}
+      </Toolbar>
+    </Container>
+  </AppBar>
     )
 }
 
